@@ -27,9 +27,9 @@ func main() {
 	fmt.Println(divStr)
 
 	fmt.Println("\n1 ================================\n")
-	uintStr := "18446744073709551615"
+	maxUint64Str := "18446744073709551615"
 	m = memAlloc()
-	n := decimal.RequireFromString(uintStr)
+	n := decimal.RequireFromString(maxUint64Str)
 	m()
 	nStr := n.String()
 	m()
