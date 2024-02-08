@@ -86,6 +86,26 @@ func main() {
 	}
 	fmt.Println(price)
 	fmt.Println(priceToStoreKey(price))
+
+	fmt.Println("\n7 ================================\n")
+
+	sdkN1 = sdkmath.NewUint(100_000)
+	sdkN2 = sdkmath.NewUint(1_000)
+	priceSum := decimal.Decimal{}
+	var count int64 = 0
+	for {
+		price, err = calculatePrice(sdkN1, sdkN2)
+		if err != nil {
+			break
+		}
+		priceSum = priceSum.Add(price)
+		count++
+		fmt.Println(price)
+
+		sdkN1 = sdkN1.Sub(sdkmath.OneUint())
+		sdkN2 = sdkN2.Sub(sdkmath.OneUint())
+	}
+	fmt.Printf("Average price: %s\n", priceSum.DivRound(decimal.NewFromInt(count), precision))
 }
 
 func memAlloc() func() {
@@ -112,6 +132,10 @@ func maxSDKUint() sdkmath.Uint {
 var minInvalidPrice = decimal.RequireFromString("10000000000000000000")
 
 func calculatePrice(n1 sdkmath.Uint, n2 sdkmath.Uint) (decimal.Decimal, error) {
+	if n1.Equal(sdkmath.ZeroUint()) || n2.Equal(sdkmath.ZeroUint()) {
+		return decimal.Decimal{}, errors.New("zeros are bad")
+	}
+
 	n1Dec := decimal.NewFromBigInt(n1.BigInt(), 0)
 	n2Dec := decimal.NewFromBigInt(n2.BigInt(), 0)
 
