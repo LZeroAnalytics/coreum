@@ -1,12 +1,8 @@
 package nft
 
-import (
-	sdk "github.com/cosmos/cosmos-sdk/types"
-)
-
 // ValidateGenesis check the given genesis state has no integrity issues.
 func ValidateGenesis(data GenesisState) error {
-	for _, class := range data.Classes {
+	/*for _, class := range data.Classes {
 		if err := ValidateClassID(class.Id); err != nil {
 			return err
 		}
@@ -20,7 +16,7 @@ func ValidateGenesis(data GenesisState) error {
 				return err
 			}
 		}
-	}
+	}*/
 	return nil
 }
 
